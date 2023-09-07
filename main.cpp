@@ -32,8 +32,8 @@ char keys[ROWS][COLS] = {
     {'*', '0', '#'}
 };
 
-DigitalIn rowPins[ROWS] = {PTC9, PTC8, PTC7, PTC6};
-DigitalOut colPins[COLS] = {PTC5, PTC4, PTC3};
+DigitalIn rowPins[ROWS] = {D2, D3, D4, D5};
+DigitalOut colPins[COLS] = {D6, D7, D8};
 
 char readKeypad() {
     // Loop through each column, set it as output, and scan rows
@@ -76,7 +76,7 @@ double calcularDesviacionEstandar(const int datos[], int n, double promedio) {
 int main()
 {
 
-    cout << "Este programa tiene 3 funcionalidades, \nla primera es encontrar la pendiente y la intersección dados dos puntos, \nla segunda es encontrar el promedio y la desviación estándar dado un conjunto N de temperaturas. \nEl tercero, es para generar colores con el código RGB en el led. \nIngrese un número (1, 2 o 3) dependiendo de la función que desea.\n";
+    cout << "Este programa tiene 3 funcionalidades, \nla primera es encontrar la pendiente y la interseccion dados dos puntos, \nla segunda es encontrar el promedio y la desviacion estandar dado un conjunto N de temperaturas. \nEl tercero, es para generar colores con el codigo RGB en el led. \nIngrese un numero (1, 2 o 3) dependiendo de la funcion que desea. \nIngrese * para limpiar la entrada actual y # como enter\n";
     ThisThread::sleep_for(BLINKING_RATE);
     flag = true;
     while(flag){
@@ -97,13 +97,17 @@ int main()
         }
     
     if (opcion == "1#"){
-         int x1=0;
+        flag = true;
+        cout << "Opcion seleccionada: Rectas \n";
+        ThisThread::sleep_for(BLINKING_RATE);
+        int x1=0;
         int x2=0;
         int y1=0;
         int y2=0;
         int m=0;
         int b=0;
         cout <<"Ingrese la x del primer punto:\n";
+        ThisThread::sleep_for(BLINKING_RATE);
         while (flag){
                     char key = readKeypad();
                     if (key != NO_KEY) {
@@ -118,6 +122,7 @@ int main()
                             aux = "";
                             input = "";
                             flag = false;
+                            ThisThread::sleep_for(BLINKING_RATE);
                         }
                         if (key == '*') {
                             input = "";
@@ -126,6 +131,7 @@ int main()
                     }
                 }
         cout <<"Ingrese la y del primer punto:\n";
+        ThisThread::sleep_for(BLINKING_RATE);
         flag=true;
         while (flag){
                     char key = readKeypad();
@@ -141,6 +147,7 @@ int main()
                             aux = "";
                             input = "";
                             flag = false;
+                            ThisThread::sleep_for(BLINKING_RATE);
                         }
                         if (key == '*') {
                             input = "";
@@ -149,6 +156,7 @@ int main()
                     }
                 }
         cout <<"Ingrese la x del segundo punto:\n";
+        ThisThread::sleep_for(BLINKING_RATE);
         flag =true;
         while (flag){
                     char key = readKeypad();
@@ -164,6 +172,7 @@ int main()
                             aux = "";
                             input = "";
                             flag = false;
+                            ThisThread::sleep_for(BLINKING_RATE);
                         }
                         if (key == '*') {
                             input = "";
@@ -172,6 +181,8 @@ int main()
                     }
                 }
         cout <<"Ingrese la y del segundo punto:\n";
+        ThisThread::sleep_for(BLINKING_RATE);
+        flag = true;
         while (flag){
                     char key = readKeypad();
                     if (key != NO_KEY) {
@@ -186,6 +197,7 @@ int main()
                             aux = "";
                             input = "";
                             flag = false;
+                            ThisThread::sleep_for(BLINKING_RATE);
                         }
                         if (key == '*') {
                             input = "";
@@ -204,13 +216,16 @@ int main()
         }
         else {
             m=(y2-y1)/(x2-x1);
-            printf("El intercepto con y: %d\n", m);
+            printf("La pendiente = %d\n", m);
             b= y1-m*x1;
             printf("El intercepto con y: %d\n", b);
         }
     }else if (opcion == "2#"){
         cout << "Opcion seleccionada promedio de temperaturas\n";
         int cantidad = 0;
+
+        cout << "Ingrese la cantidad de temperaturas\n";
+        ThisThread::sleep_for(BLINKING_RATE);
         flag = true;
         while(flag){
             char key = readKeypad();
@@ -226,6 +241,7 @@ int main()
                     aux = "";
                     input = "";
                     flag = false;
+                    ThisThread::sleep_for(BLINKING_RATE);
                     }
                 if (key == '*') {
                         input = "";
@@ -238,7 +254,10 @@ int main()
         double promedio = 0;
 
         for (int i = 0; i < cantidad; i ++){
+            ThisThread::sleep_for(BLINKING_RATE);
+            flag = true;
             int temp = 0;
+            printf("Temperatura a ingresar: %d \n", i+1);
             while(flag){
             char key = readKeypad();
             if (key != NO_KEY) {
@@ -253,6 +272,7 @@ int main()
                     aux = "";
                     input = "";
                     flag = false;
+                    ThisThread::sleep_for(BLINKING_RATE);
                     }
                     if (key == '*') {
                         input = "";
@@ -270,7 +290,7 @@ int main()
         printf("La desviación estándar es: %.4f\n", des);
     
     }else if (opcion == "3#"){
-        cout << "Se ha seleccionado RGB";
+        cout << "Se ha seleccionado RGB\n";
         PwmOut ledR(LED1);
         PwmOut ledG(LED2);
         PwmOut ledB(LED3);
@@ -281,7 +301,7 @@ int main()
         
 
         while (true){
-            cout << "Ingresa el codigo RGB del led rojo (Presiona # como enter y * para limpiar toda la entrada): ";
+            cout << "Ingresa el codigo RGB del led rojo (Presiona # como enter y * para limpiar toda la entrada): \n";
             flag = true;
             while (flag){
                 char key = readKeypad();
@@ -305,7 +325,7 @@ int main()
                 }
             }
                 
-            cout << "Ingresa el codigo RGB del led verde (Presiona # como enter y * para limpiar toda la entrada):";
+            cout << "Ingresa el codigo RGB del led verde (Presiona # como enter y * para limpiar toda la entrada): \n";
             flag = true;
             while (flag){
                 char key = readKeypad();
@@ -329,7 +349,7 @@ int main()
                 }
             }
 
-            cout << "Ingresa el codigo RGB del led azul (Presiona # como enter y * para limpiar toda la entrada): ";
+            cout << "Ingresa el codigo RGB del led azul (Presiona # como enter y * para limpiar toda la entrada): \n";
             flag = true;
             while (flag){
                 char key = readKeypad();
@@ -362,6 +382,6 @@ int main()
             ledB.write(1.0 - pwmB);
         }
     }else{
-        cout << "Opcion no valida, reinicie la tarjeta";
+        cout << "Opcion no valida, reinicie la tarjeta \n";
     }
 }
